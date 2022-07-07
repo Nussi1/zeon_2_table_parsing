@@ -1,10 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 import csv
 
+'''Берем ссылку из сайта, откуда нужно спарсить данные'''
 URL = 'https://www.akchabar.kg/ru/exchange-rates/'
 
+'''Эта функция вытаскивает данные с таблицы, c помощью пакета Beautifulsoup (анализа документов HTML и XML). rows ищет все данные, которые лежат под тэгом tr. Открываем пустой лист all_rates, куда appendим найденные текстовые данные, которые лежат под определенным индексом [n].'''
 def get_rate():
     page = requests.get(url=URL)
     soup = BeautifulSoup(page.text, 'html.parser')
@@ -27,6 +28,7 @@ def get_rate():
                 "kzt_prodaja" : row.find_all('td')[8].text,
     })
 
+
     field_names = ["banks",
             'usd_pokupka',
             "usd_prodaja",
@@ -40,7 +42,7 @@ def get_rate():
         writer = csv.DictWriter(file, fieldnames=field_names)
         writer.writeheader()
         writer.writerows(all_rates)
-        
+'''Записываем полученные данные (словарь 'DictWriter') в csv file, c последовательностью ключей с помощью параметра field_names. '''       
 
 def main():
     get_rate()
