@@ -29,7 +29,7 @@ def get_rate():
                 "kzt_prodaja" : row.find_all('td')[8].text,
     })
 
-    t_date = datetime.now().strftime('%d_%m_%Y')
+    t_date = datetime.now().strftime('%d_%m_%Y, %H:%M:%S')
 
     field_names = ["banks",
             'usd_pokupka',
