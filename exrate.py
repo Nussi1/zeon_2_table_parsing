@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import csv
+from datetime import datetime
 
 '''Берем ссылку из сайта, откуда нужно спарсить данные'''
 URL = 'https://www.akchabar.kg/ru/exchange-rates/'
@@ -28,6 +29,7 @@ def get_rate():
                 "kzt_prodaja" : row.find_all('td')[8].text,
     })
 
+    t_date = datetime.now().strftime('%d_%m_%Y, %H:%M:%S')
 
     field_names = ["banks",
             'usd_pokupka',
@@ -38,7 +40,7 @@ def get_rate():
             "rub_prodaja",
             "kzt_pokupka",
             "kzt_prodaja"]
-    with open('table_of_exchange_rates.csv', 'w') as file:
+    with open(f'table_of_exchange_rates_for_{t_date}.csv', 'w') as file:
         writer = csv.DictWriter(file, fieldnames=field_names)
         writer.writeheader()
         writer.writerows(all_rates)
