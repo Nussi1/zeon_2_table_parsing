@@ -30,6 +30,7 @@ def get_rate():
     })
 
     t_date = datetime.now().strftime('%d_%m_%Y, %H:%M:%S')
+    
 
     field_names = ["banks",
             'usd_pokupka',
